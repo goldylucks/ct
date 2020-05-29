@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+import { Link } from "@reach/router";
 
-function Phase1() {
+function Phase1({
+  chain,
+  setChain,
+  responseToBeChanged,
+  setResponseToBeChanged,
+}) {
   const [activeStep, setActiveStep] = useState(0);
   const [isRecursiveMode, setIsRecursiveMode] = useState(false);
-  const [chain, setChain] = useState([]);
-  const [step0, setStep0] = useState("");
   const [step1, setStep1] = useState("");
   const [step2, setStep2] = useState("");
   const [step4, setStep4] = useState("");
@@ -41,12 +45,17 @@ function Phase1() {
       {activeStep === 0 && (
         <form onSubmit={handleNextStep}>
           <p>What feeling, behavior or thought do you want to change?</p>
-          <input onChange={(evt) => setStep0(evt.target.value)} value={step0} />
+          <input
+            onChange={(evt) => setResponseToBeChanged(evt.target.value)}
+            value={responseToBeChanged}
+          />
         </form>
       )}
       {activeStep === 1 && (
         <form onSubmit={handleNextStep}>
-          <p>Where, when and with whom do you have this {step0}?</p>
+          <p>
+            Where, when and with whom do you have this {responseToBeChanged}?
+          </p>
           <input onChange={(evt) => setStep1(evt.target.value)} value={step1} />
         </form>
       )}
@@ -54,11 +63,12 @@ function Phase1() {
         <form onSubmit={handleNextStep}>
           <p>
             Take a moment to relax and turn inward… Think about a specific time
-            that {step0} occurred… Mentally step into the situation, seeing what
-            you saw, hearing what you heard, feeling what you felt at the time…
-            As you relive this experience, notice your internal images, sounds
-            and/or feelings… Since you didn’t consciously generate {step0}, it’s
-            as if some part of you generated it.{" "}
+            that {responseToBeChanged} occurred… Mentally step into the
+            situation, seeing what you saw, hearing what you heard, feeling what
+            you felt at the time… As you relive this experience, notice your
+            internal images, sounds and/or feelings… Since you didn’t
+            consciously generate {responseToBeChanged}, it’s as if some part of
+            you generated it.{" "}
           </p>
           <input onChange={(evt) => setStep2(evt.target.value)} value={step2} />
         </form>
@@ -140,16 +150,11 @@ function Phase1() {
             />
           </form>
           <div>
-            <button onClick={handleNextStep}>
+            <Link to="/phase2">
               There's nothing deeper, {chain[chain.length - 1]} is my core state
-            </button>
+            </Link>
           </div>
         </>
-      )}
-      {activeStep === 7 && (
-        <form onSubmit={handleNextStep}>
-          <p>End of phase 1!</p>
-        </form>
       )}
     </div>
   );
